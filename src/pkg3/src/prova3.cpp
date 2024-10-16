@@ -43,7 +43,7 @@ class MyNode
         ac.waitForServer();
         ROS_INFO("Action server started, sending goal."); 
 
-        ros::Rate loopRate(0.5); //2 secondi
+        ros::Rate loopRate(0.1); //5 secondi
         while(q0.position[6]>0 && ros::ok())
           {
               // send a goal to the action
@@ -75,7 +75,7 @@ class MyNode
               //goal.goal.trajectory.points.effort=vettore di forze;
       
               ros::Duration iniziale(0,0);
-              ros::Duration finale(0.8,0); //il goal deve essere raggiunto in 15 ms
+              ros::Duration finale(3.5,0); //il goal deve essere raggiunto in 15 ms
               goal.goal.trajectory.points[0].time_from_start=finale;
       
               //goal.goal.path_tolerance.resize(1);
@@ -91,7 +91,7 @@ class MyNode
               //goal.goal.trajectory.goal_tolerance.acceleration=1.0;
               goal.goal.goal_time_tolerance=ros::Duration(0, 50000000);
       
-              ROS_INFO("Sono nella callback"); 
+              ROS_INFO("Sono nella while"); 
       
               //invia la richiesta all'action_server
               ac.sendGoal(goal.goal);
