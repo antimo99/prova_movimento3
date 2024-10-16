@@ -75,7 +75,7 @@ class MyNode
               //goal.goal.trajectory.points.effort=vettore di forze;
       
               ros::Duration iniziale(0,0);
-              ros::Duration finale(3.5,0); //il goal deve essere raggiunto in 15 ms
+              ros::Duration finale(3.5,0); 
               goal.goal.trajectory.points[0].time_from_start=finale;
       
               //goal.goal.path_tolerance.resize(1);
@@ -89,9 +89,9 @@ class MyNode
               //goal.goal.trajectory.goal_tolerance.position=1.
               //goal.goal.trajectory.goal_tolerance.velocity=1.0;
               //goal.goal.trajectory.goal_tolerance.acceleration=1.0;
-              goal.goal.goal_time_tolerance=ros::Duration(0, 50000000);
+              goal.goal.goal_time_tolerance=ros::Duration(0, 500000000);
       
-              ROS_INFO("Sono nella while"); 
+              ROS_INFO("Sono nel while"); 
       
               //invia la richiesta all'action_server
               ac.sendGoal(goal.goal);
