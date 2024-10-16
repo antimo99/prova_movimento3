@@ -31,21 +31,91 @@ class MyNode
     {
         indice=0;
         ros::Time start=ros::Time::now();
-        auto msg=ros::topic::waitForMessage<sensor_msgs::JointState>("/joint_states",ros::Duration(1.0));
+        /*auto msg=ros::topic::waitForMessage<sensor_msgs::JointState>("/joint_states",ros::Duration(1.0));
         for (size_t i = 0; i < msg->name.size(); ++i) 
         {
             ROS_INFO("Nome: %s, Posizione: %f", msg->name[i].c_str(), msg->position[i]);
         }
-        q0=*msg;
+        //q0=*msg;*/
+        q0={-0.046482558179842794, -0.34113309193494024, -0.007584855000047307, -1.752088473972521, -0.012323863322536252, 1.5533312192228106, 2.6412585185767594};
 
         ROS_INFO("Waiting for action server to start.");
         ac.waitForServer();
         ROS_INFO("Action server started, sending goal."); 
-        ros::Duration(6).sleep(); 
-        timer_ =n.createTimer(ros::Duration(0.050,0), &MyNode::timerCallback,this); //duration(seconds,nanoseconds)
+
+        ros::Rate loopRate(0.5); //2 secondi
+        while(q0.position[6]>0 && ros::ok())
+          {
+              // send a goal to the action
+              control_msgs::FollowJointTrajectoryActionGoal goal;
+          
+              goal.goal.trajectory.joint_names=joint_names_;
+      
+            
+              //goal.header.seq=1;
+              ros::Duration delta(1.0,0);
+              goal.header.stamp=ros::Time::now()+delta;
+              //goal.header.frame_id="ci vuole una stringa";
+              goal.goal_id.stamp=ros::Time::now()+delta;
+              //goal.goal_id.id="stringa";
+              //goal.goal.trajectory.header.seq=1;
+              goal.goal.trajectory.header.stamp=ros::Time(0);
+              //goal.goal.trajectory.header.frame_id="stringa";
+              goal.goal.trajectory.joint_names=joint_names_;
+              goal.goal.trajectory.points.resize(1);
+              //goal.goal.trajectory.points[0].positions=q0.position;
+              goal.goal.trajectory.points[0].positions.resize(7);
+              goal.goal.trajectory.points[0].positions = q0.position;
+      
+              goal.goal.trajectory.points[0].positions[6]=q0.position[6]; //incremento di 2 gradi
+              q0.position[6]-=0.035;
+
+              //goal.goal.trajectory.points.velocities=vettore di veelocità;
+              //goal.goal.trajectory.points.accelerations=vettore di accelerazioni
+              //goal.goal.trajectory.points.effort=vettore di forze;
+      
+              ros::Duration iniziale(0,0);
+              ros::Duration finale(0.8,0); //il goal deve essere raggiunto in 15 ms
+              goal.goal.trajectory.points[0].time_from_start=finale;
+      
+              //goal.goal.path_tolerance.resize(1);
+              //goal.goal.path_tolerance[0].name="tolleranza1";
+              //goal.goal.trajectory.path_tolerance.position=1.0;
+              //goal.goal.trajectory.path_tolerance.veelocity=1.0;
+              //goal.goal.trajectory.path_tolerance.acceeleration=1.0;
+      
+              goal.goal.goal_tolerance.resize(1);
+              //goal.goal.goal_tolerance[0].name="tolleranza2";
+              //goal.goal.trajectory.goal_tolerance.position=1.
+              //goal.goal.trajectory.goal_tolerance.velocity=1.0;
+              //goal.goal.trajectory.goal_tolerance.acceleration=1.0;
+              goal.goal.goal_time_tolerance=ros::Duration(0, 50000000);
+      
+              ROS_INFO("Sono nella callback"); 
+      
+              //invia la richiesta all'action_server
+              ac.sendGoal(goal.goal);
+              
+      
+              //wait for the action to return
+              bool finished_before_timeout = ac.waitForResult(ros::Duration(30.0));
+      
+              if (finished_before_timeout)
+              {
+                actionlib::SimpleClientGoalState state = ac.getState();
+                ROS_INFO("Action finished: %s",state.toString().c_str());
+              }
+              else
+              {
+                ROS_INFO("Action did not finish before the time out.");
+                ac.cancelGoal();
+              }
+             loopRate.sleep();
+           }
+              //timer_ =n.createTimer(ros::Duration(0.050,0), &MyNode::timerCallback,this); //duration(seconds,nanoseconds)         
     }
 
-    void timerCallback(const ros::TimerEvent&)
+    /*void timerCallback(const ros::TimerEvent&)
     {
         // send a goal to the action
         control_msgs::FollowJointTrajectoryActionGoal goal;
@@ -126,9 +196,7 @@ class MyNode
           ROS_INFO("Action did not finish before the time out.");
           ac.cancelGoal();
         }
-    }
-
-
+    }*/
 };
 
 int main (int argc, char **argv)
