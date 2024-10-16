@@ -41,7 +41,7 @@ class MyNode
         ROS_INFO("Waiting for action server to start.");
         ac.waitForServer();
         ROS_INFO("Action server started, sending goal."); 
-        timer_ =n.createTimer(ros::Duration(5.0,0), &MyNode::timerCallback,this); //duration(seconds,nanoseconds)
+        timer_ =n.createTimer(ros::Duration(1,0), &MyNode::timerCallback,this); //duration(seconds,nanoseconds)
     }
 
     void timerCallback(const ros::TimerEvent&)
@@ -53,7 +53,7 @@ class MyNode
 
       
         //goal.header.seq=1;
-        ros::Duration delta(1.0);
+        ros::Duration delta(0.01.0);
         goal.header.stamp=ros::Time::now()+delta;
         //goal.header.frame_id="ci vuole una stringa";
         goal.goal_id.stamp=ros::Time::now()+delta;
@@ -90,7 +90,7 @@ class MyNode
         //goal.goal.trajectory.points.effort=vettore di forze;
 
         ros::Duration iniziale(0,0);
-        ros::Duration finale(3,0); //il goal deve essere raggiunto in 15 ms
+        ros::Duration finale(0.85,0); //il goal deve essere raggiunto in 15 ms
         goal.goal.trajectory.points[0].time_from_start=finale;
 
         //goal.goal.path_tolerance.resize(1);
