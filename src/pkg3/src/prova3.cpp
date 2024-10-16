@@ -16,6 +16,8 @@ class MyNode
   public: 
     sensor_msgs::JointState q0; 
     int indice;
+    ros::NodeHandle n;
+    ros::Timer timer_;
     std::vector<std::string> joint_names_ = {"panda_joint1",
                                              "panda_joint2",
                                              "panda_joint3",
@@ -23,6 +25,7 @@ class MyNode
                                              "panda_joint5",
                                              "panda_joint6",
                                              "panda_joint7"};
+   
 
     MyNode() : ac("/position_joint_trajectory_controller/follow_joint_trajectory", true)
     {
@@ -38,7 +41,7 @@ class MyNode
         ROS_INFO("Waiting for action server to start.");
         ac.waitForServer();
         ROS_INFO("Action server started, sending goal."); 
-        ros::Timer timer_ = this->createTimer(ros::Duration(0.020,0), timerCallback); //duration(seconds,nanoseconds)
+        timer_ = this->createTimer(ros::Duration(0.020,0), timerCallback); //duration(seconds,nanoseconds)
     }
 
     void timerCallback(const ros::TimerEvent&)
