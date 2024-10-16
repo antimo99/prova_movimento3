@@ -104,7 +104,7 @@ class MyNode
         //goal.goal.trajectory.goal_tolerance.position=1.
         //goal.goal.trajectory.goal_tolerance.velocity=1.0;
         //goal.goal.trajectory.goal_tolerance.acceleration=1.0;
-        goal.goal.goal_time_tolerance=ros::Duration(0, 500000000);
+        goal.goal.goal_time_tolerance=ros::Duration(0, 50000000);
 
         ROS_INFO("Sono nella callback"); 
 
