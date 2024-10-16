@@ -41,7 +41,7 @@ class MyNode
         ROS_INFO("Waiting for action server to start.");
         ac.waitForServer();
         ROS_INFO("Action server started, sending goal."); 
-        roscpp.sleep(6); # Sleeps for 1 sec
+        ros::Duration(6).sleep(); 
         timer_ =n.createTimer(ros::Duration(0.050,0), &MyNode::timerCallback,this); //duration(seconds,nanoseconds)
     }
 
