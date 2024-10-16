@@ -53,7 +53,7 @@ class MyNode
 
       
         //goal.header.seq=1;
-        ros::Duration delta(0.01,0);
+        ros::Duration delta(0.1,0);
         goal.header.stamp=ros::Time::now()+delta;
         //goal.header.frame_id="ci vuole una stringa";
         goal.goal_id.stamp=ros::Time::now()+delta;
