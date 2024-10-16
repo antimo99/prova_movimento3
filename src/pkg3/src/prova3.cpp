@@ -41,7 +41,7 @@ class MyNode
         ROS_INFO("Waiting for action server to start.");
         ac.waitForServer();
         ROS_INFO("Action server started, sending goal."); 
-        timer_ =n.createTimer(ros::Duration(0.020,0), &MyNode::timerCallback,this); //duration(seconds,nanoseconds)
+        timer_ =n.createTimer(ros::Duration(20,0), &MyNode::timerCallback,this); //duration(seconds,nanoseconds)
     }
 
     void timerCallback(const ros::TimerEvent&)
@@ -69,13 +69,13 @@ class MyNode
 
         if(indice<=360) //se non sono ancora arrivato ai 1800 gradi finali vado av
          {
-            goal.goal.trajectory.points[0].positions[6]+=0.0087; //incremento di 0.5 gradi
+            goal.goal.trajectory.points[0].positions[6]+=0.0087*80; //incremento di 0.5 gradi
             q0.position[6]+=0.0087;
          }
 
          else if(indice>360 && indice <720) //se sono arrivato a 360 gradi torno indietro 
          {
-            goal.goal.trajectory.points[0].positions[6]-=0.0087; //incremento di 0.5 gradi
+            goal.goal.trajectory.points[0].positions[6]-=0.0087*80; //incremento di 0.5 gradi
             q0.position[6]-=0.0087;
          }
 
@@ -85,7 +85,7 @@ class MyNode
         //goal.goal.trajectory.points.effort=vettore di forze;
 
         ros::Duration iniziale(0,0);
-        ros::Duration finale(0.015,0); //il goal deve essere raggiunto in 15 ms
+        ros::Duration finale(15,0); //il goal deve essere raggiunto in 15 ms
         goal.goal.trajectory.points[0].time_from_start=finale;
 
         //goal.goal.path_tolerance.resize(1);
