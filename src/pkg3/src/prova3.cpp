@@ -67,16 +67,21 @@ class MyNode
         goal.goal.trajectory.points[0].positions.resize(7);
         goal.goal.trajectory.points[0].positions = q0.position;
 
-        if(indice<=360) //se non sono ancora arrivato ai 1800 gradi finali vado av
+        if(indice<=20) //se non sono ancora arrivato ai 1800 gradi finali vado av
          {
-            goal.goal.trajectory.points[0].positions[6]+=0.0087; //incremento di 0.5 gradi
-            q0.position[6]+=0.0087;
+            goal.goal.trajectory.points[0].positions[6]+=0.035; //incremento di 0.5 gradi
+            q0.position[6]+=0.035;
          }
 
-         else if(indice>360 && indice <720) //se sono arrivato a 360 gradi torno indietro 
+         else if(indice>20 && indice <40) //se sono arrivato a 360 gradi torno indietro 
          {
-            goal.goal.trajectory.points[0].positions[6]-=0.0087*80; //incremento di 0.5 gradi
-            q0.position[6]-=0.0087;
+            goal.goal.trajectory.points[0].positions[6]-=0.035; //incremento di 0.5 gradi
+            q0.position[6]-=0.035;
+         }
+
+         else
+         {
+           indice=0;
          }
 
         indice++;
