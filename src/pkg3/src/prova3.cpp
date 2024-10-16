@@ -101,6 +101,7 @@ class MyNode
         //goal.goal.trajectory.goal_tolerance.acceleration=1.0;
         goal.goal.goal_time_tolerance=ros::Duration(0, 500000000);
 
+        ROS_INFO("Sono nella callback"); 
 
         //invia la richiesta all'action_server
         ac.sendGoal(goal.goal);
