@@ -90,7 +90,7 @@ class MyNode
         //goal.goal.trajectory.points.effort=vettore di forze;
 
         ros::Duration iniziale(0,0);
-        ros::Duration finale(1,0); //il goal deve essere raggiunto in 15 ms
+        ros::Duration finale(0.95,0); //il goal deve essere raggiunto in 15 ms
         goal.goal.trajectory.points[0].time_from_start=finale;
 
         //goal.goal.path_tolerance.resize(1);
