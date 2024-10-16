@@ -24,7 +24,7 @@ class MyNode
                                              "panda_joint6",
                                              "panda_joint7"};
 
-    MyNode() : ac("/position_joint_trajectory_controller/follow_joint_trajectory", true);
+    MyNode() : ac("/position_joint_trajectory_controller/follow_joint_trajectory", true)
     {
         indice=0;
         ros::Time start=ros::Time::now();
