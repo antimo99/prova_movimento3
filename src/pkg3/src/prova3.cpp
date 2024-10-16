@@ -53,7 +53,7 @@ class MyNode
 
       
         //goal.header.seq=1;
-        ros::Duration delta(0.1,0);
+        ros::Duration delta(0,0);
         goal.header.stamp=ros::Time::now()+delta;
         //goal.header.frame_id="ci vuole una stringa";
         goal.goal_id.stamp=ros::Time::now()+delta;
@@ -67,15 +67,15 @@ class MyNode
         goal.goal.trajectory.points[0].positions.resize(7);
         goal.goal.trajectory.points[0].positions = q0.position;
 
-        if(indice<=20) //se non sono ancora arrivato ai 1800 gradi finali vado av
+        if(indice<=20) //
          {
-            goal.goal.trajectory.points[0].positions[6]+=0.035; //incremento di 0.5 gradi
+            goal.goal.trajectory.points[0].positions[6]+=0.035; //incremento di 2 gradi
             q0.position[6]+=0.035;
          }
 
-         else if(indice>20 && indice <40) //se sono arrivato a 360 gradi torno indietro 
+         else if(indice>20 && indice <40) //
          {
-            goal.goal.trajectory.points[0].positions[6]-=0.035; //incremento di 0.5 gradi
+            goal.goal.trajectory.points[0].positions[6]-=0.035; //incremento di 2 gradi
             q0.position[6]-=0.035;
          }
 
@@ -90,7 +90,7 @@ class MyNode
         //goal.goal.trajectory.points.effort=vettore di forze;
 
         ros::Duration iniziale(0,0);
-        ros::Duration finale(0.85,0); //il goal deve essere raggiunto in 15 ms
+        ros::Duration finale(1,0); //il goal deve essere raggiunto in 15 ms
         goal.goal.trajectory.points[0].time_from_start=finale;
 
         //goal.goal.path_tolerance.resize(1);
